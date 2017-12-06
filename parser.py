@@ -41,7 +41,8 @@ class Packislav():
         return len(self.pack)
     def theme_counter(self, round): #считает количество тем в раунде, по номеру раунда
         return len(self.pack[round][1])
-
+'''
+чекнуть пак чисто
 x = Packislav("C:\\Users\\Админ\\Desktop\\sml\\sadf\\content.xml")
 for i in range(x.rounds_count):
     for j in range(x.theme_counter(i)):
@@ -49,3 +50,4 @@ for i in range(x.rounds_count):
             print(x.question(i, j, n))
         print("\n")
     print("----------------")
+'''
