@@ -20,6 +20,7 @@ def pack(path):
             for question in range(len(x[round][1][theme][1])):
                 p = x[round][1][theme][1][question]
                 x[round][1][theme][1][question] = []
+                x[round][1][theme][1][question].append(True)
                 x[round][1][theme][1][question].append(p.attrib['price'])
                 x[round][1][theme][1][question].append(p.find(".//" + xmlns + "atom").text)
                 x[round][1][theme][1][question].append(p.find(".//" + xmlns + "answer").text)
@@ -28,19 +29,23 @@ def pack(path):
 #тупа по обработаному паку, создает класс, чтобы работать было приятней
 #чтобы создать класс, нужно указать путь на файл content.xml в папке где распакован архив
 class Packislav():
-    def __init__(self, path):
+    def __init__(self, path, players):
+        self.players = players
         self.pack = pack(path)
         self.rounds_count = self.round_counter() #количество раундов
     def round_name(self, round): #имя раунда по его номеру
         return self.pack[round][0]
     def theme_name(self, round, theme): #имя темы по номеру раунда и номеру темы
         return self.pack[round][1][theme][0]
-    def question(self, round, theme, question): # массив с вопросом, где 1 - цена, 2 - вопрос, 3 - ответ
+    def question(self, round, theme, question): # массив с вопросом, где 1 - True если вопрос не был задан, 2 - цена, 3 - вопрос, 4 - ответ
         return self.pack[round][1][theme][1][question]
+    def question_edit(self, round, theme, question):
+            pack[round][1][theme][1][question][0] = Falses
     def round_counter(self):
         return len(self.pack)
     def theme_counter(self, round): #считает количество тем в раунде, по номеру раунда
         return len(self.pack[round][1])
+
 '''
 чекнуть пак чисто
 x = Packislav("C:\\Users\\Админ\\Desktop\\sml\\sadf\\content.xml")
