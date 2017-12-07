@@ -29,10 +29,13 @@ def pack(path):
 #тупа по обработаному паку, создает класс, чтобы работать было приятней
 #чтобы создать класс, нужно указать путь на файл content.xml в папке где распакован архив
 class Packislav():
-    def __init__(self, path, players):
-        self.players = players
+    def __init__(self, path):
+        self.players = set()
+        self.c_r = 0
         self.pack = pack(path)
         self.rounds_count = self.round_counter() #количество раундов
+    def add_player(self, x):
+        self.players.add(str(x))
     def round_name(self, round): #имя раунда по его номеру
         return self.pack[round][0]
     def theme_name(self, round, theme): #имя темы по номеру раунда и номеру темы
@@ -40,11 +43,15 @@ class Packislav():
     def question(self, round, theme, question): # массив с вопросом, где 1 - True если вопрос не был задан, 2 - цена, 3 - вопрос, 4 - ответ
         return self.pack[round][1][theme][1][question]
     def question_edit(self, round, theme, question):
-            pack[round][1][theme][1][question][0] = Falses
+            self.pack[round][1][theme][1][question][0] = False
     def round_counter(self):
         return len(self.pack)
     def theme_counter(self, round): #считает количество тем в раунде, по номеру раунда
         return len(self.pack[round][1])
+    def start_game(self):
+        self.c_r = 1
+    def next_round(self):
+        self.c_r += 1
 
 '''
 чекнуть пак чисто
