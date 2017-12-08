@@ -29,13 +29,47 @@ def pack(path):
 #тупа по обработаному паку, создает класс, чтобы работать было приятней
 #чтобы создать класс, нужно указать путь на файл content.xml в папке где распакован архив
 class Packislav():
-    def __init__(self, path):
-        self.players = set()
-        self.c_r = 0
-        self.pack = pack(path)
+    def __init__(self):
+        self.player_answer = None
+        self.players = {}
+        self.last_answer = ''
+        self.start_answer = False
+        self.end_qustion = False
+        self.Posted = False
+        self.start_dispute = False
+        self.c_r = None
+        self.c_q = None
+        self.IsClear = None
+        self.pack = ""
+        self.IsAlive = None
+        self.score=[]
+        self.end_game = False
+        self.ved =  None
+        self.ved_last = None
         self.rounds_count = self.round_counter() #количество раундов
+    def chose_pack(self, path):
+        self.pack = pack(path)
+    def set_ved(self, x):
+        self.ved_last = self.ved
+        self.ved = x
+    def show_players(self):
+        show = ''
+        j = 0
+        for i in self.players.items():
+            j += 1
+            show += str(j) + " : " + i[0] + "\n"
+        return show
+    def score_table(self):
+        score = ''
+        print(self.players)
+        print(self.players.items())
+        for i in self.players.items():
+            print(i)
+            score += "@" + str(i[0]) + " : " + str(i[1]) +  "\n"
+        return score
     def add_player(self, x):
-        self.players.add(str(x))
+        print(x.from_user.id, " ", x.from_user.username, " ", 0)
+        self.players[x.from_user.username] = 0
     def round_name(self, round): #имя раунда по его номеру
         return self.pack[round][0]
     def theme_name(self, round, theme): #имя темы по номеру раунда и номеру темы
@@ -49,9 +83,17 @@ class Packislav():
     def theme_counter(self, round): #считает количество тем в раунде, по номеру раунда
         return len(self.pack[round][1])
     def start_game(self):
-        self.c_r = 1
+        self.c_r = 0
+    def round_themes(self, round):
+        k = ''
+        for i in range(self.theme_counter(round)):
+            k += self.theme_name(round, i) + ", "
+        return k
     def next_round(self):
-        self.c_r += 1
+        if self.round_counter() > self.c_r + 1:
+            self.c_r += 1
+        else:
+            self.end_game = True
 
 '''
 чекнуть пак чисто
